@@ -15,6 +15,7 @@ export default class Header extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDaftar = this.handleDaftar.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
         this.state = {
             show : false,
             isLoggedIn : false,
@@ -22,7 +23,9 @@ export default class Header extends Component {
             daftar : null
         }
     }
-    
+    handleCheck(){
+        console.log(this.state)
+    }
     handleModal(event){
 
         if(event.target.id === "daftar"){
@@ -103,8 +106,6 @@ export default class Header extends Component {
             username : "",
             password : ""
         })
-        console.log(this.state.daftar)
-        
     }
     render() {
         return (
@@ -123,6 +124,7 @@ export default class Header extends Component {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
+                <Button variant="outline-primary" onClick={this.handleCheck}>Cek Data</Button>:
                 </Nav>
                 {
                     this.state.isLoggedIn ?  
