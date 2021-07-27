@@ -110,7 +110,10 @@ handleDaftar(){
         show : false,
         daftar : daftar,
         username : "",
-        password : ""
+        password : "",
+        kota : "",
+        gender : ""
+        
     })
 }
     render(){
