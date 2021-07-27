@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Navbar, Nav, Container, Button, Modal } from 'react-bootstrap'
 import logo from '../logo.svg'
 import LoginForm from '../molecules/Login'
+import RegisterForm from '../molecules/Login'
 
 
 export default class Header extends Component {
@@ -10,17 +11,31 @@ export default class Header extends Component {
         this.handleModal = this.handleModal.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeDaftar = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDaftar = this.handleSubmit.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
         this.state = {
             show : false,
             isLoggedIn : false,
             username: "",
-            password: ""
+            password: "",
+            modal : ""
         }
     }
     
-    handleModal(){
+    handleModal(event){
+
+        if(event.target.id === "daftar"){
+            this.setState({
+                modal: "daftar"
+            })
+        }
+         else {
+            this.setState({
+                modal: "masuk"
+            })
+         }
         this.setState({
             show: true
         })
@@ -38,6 +53,11 @@ export default class Header extends Component {
         });
     }
 
+    handleChangeDaftar(event) {
+        this.setState({
+            [event.target.name] : event.target.value
+        });
+    }
     handleSubmit(event) {
         let user = {
             username : "admin",
@@ -50,7 +70,7 @@ export default class Header extends Component {
                 show: false,
                 username : "",
                 password : "",
-                isLoggedIn : true
+                isLoggedIn : true,
             })
         }
         else {
@@ -64,6 +84,10 @@ export default class Header extends Component {
         this.setState({
             isLoggedIn : false
         })
+    }
+
+    handleDaftar(){
+
     }
     render() {
         return (
@@ -86,12 +110,12 @@ export default class Header extends Component {
                 {
                     this.state.isLoggedIn ?  
                     <Button variant="outline-success" onClick={this.handleLogout}>keluar</Button>:
-                    <Button variant="outline-success" onClick={this.handleModal}>Masuk</Button> 
+                    <Button id="masuk" variant="outline-success" onClick={this.handleModal}>Masuk</Button> 
                 }
                 {
                     this.state.isLoggedIn ?  <div></div>:
                 <div className="margin-left-2">
-                     <Button variant="success">Daftar</Button>
+                     <Button id="daftar" variant="success" onClick={this.handleModal}>Daftar</Button>
                  </div>
                 }
                    
@@ -100,7 +124,6 @@ export default class Header extends Component {
             </Navbar.Collapse>
             </Container>
             </Navbar>
-
             <Modal
                 show={this.state.show}
                 onHide={this.handleClose}
@@ -110,11 +133,18 @@ export default class Header extends Component {
                 >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter" onClick={this.handleClose}>
-                    Login
+                    {
+                        this.state.modal === "daftar" ? "Daftar" : "Masuk"
+                    }
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <LoginForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+                    {
+                        this.state.modal === "daftar" ? 
+                        <LoginForm {...this.state} handleChange={this.handleChangeDaftar} handleSubmit={this.handleDaftar}/> : 
+                        <RegisterForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+                    }
+                    
                 </Modal.Body>
                 </Modal> 
         </div>  
