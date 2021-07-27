@@ -11,16 +11,15 @@ export default class Header extends Component {
         this.handleModal = this.handleModal.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleChangeDaftar = this.handleChange.bind(this);
+        this.handleChangeDaftar = this.handleChangeDaftar.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleDaftar = this.handleSubmit.bind(this);
+        this.handleDaftar = this.handleDaftar.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
         this.state = {
             show : false,
             isLoggedIn : false,
-            username: "",
-            password: "",
-            modal : ""
+            modal : "",
+            daftar : null
         }
     }
     
@@ -58,26 +57,30 @@ export default class Header extends Component {
             [event.target.name] : event.target.value
         });
     }
+    
     handleSubmit(event) {
-        let user = {
-            username : "admin",
-            password : "admin"
-        }
-        let {username, password} = this.state
-        if (user.username === username && user.password === password)
-        {
-            this.setState({
-                show: false,
-                username : "",
-                password : "",
-                isLoggedIn : true,
-            })
+        let {username, password, daftar} = this.state
+        if(daftar != null){
+            if (daftar.username === username && daftar.password === password)
+            {
+                this.setState({
+                    show: false,
+                    username : "",
+                    password : "",
+                    isLoggedIn : true,
+                })
+                alert("Login berhasil")
+            }
+            else {
+                alert("username atau password salah")
+            }
+           
         }
         else {
-            alert("username atau password salah")
+            alert("Daftar terlebih dahulu");
         }
-        event.stopPropagation();
-        event.preventDefault();
+            event.stopPropagation();
+            event.preventDefault();
     }
 
     handleLogout() {
@@ -87,7 +90,20 @@ export default class Header extends Component {
     }
 
     handleDaftar(){
-
+        let {username, password, kota} = this.state
+        let daftar = {
+            username : username,
+            password : password,
+            kota    : kota
+        }
+        this.setState({
+            show : false,
+            daftar : daftar,
+            username : "",
+            password : ""
+        })
+        console.log(this.state)
+        
     }
     render() {
         return (
@@ -134,15 +150,15 @@ export default class Header extends Component {
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter" onClick={this.handleClose}>
                     {
-                        this.state.modal === "daftar" ? "Daftar" : "Masuk"
+                        this.state.modal === "masuk" ? "Masuk" : "Daftar"
                     }
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {
-                        this.state.modal === "daftar" ? 
-                        <LoginForm {...this.state} handleChange={this.handleChangeDaftar} handleSubmit={this.handleDaftar}/> : 
-                        <RegisterForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+                        this.state.modal === "masuk" ? 
+                        <LoginForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/> : 
+                        <RegisterForm {...this.state} handleChange={this.handleChangeDaftar} handleSubmit={this.handleDaftar}/>
                     }
                     
                 </Modal.Body>
