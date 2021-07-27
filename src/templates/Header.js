@@ -90,11 +90,12 @@ export default class Header extends Component {
     }
 
     handleDaftar(){
-        let {username, password, kota} = this.state
+        let {username, password, kota, gender} = this.state
         let daftar = {
             username : username,
             password : password,
-            kota    : kota
+            kota    : kota,
+            gender : gender
         }
         this.setState({
             show : false,
@@ -102,7 +103,7 @@ export default class Header extends Component {
             username : "",
             password : ""
         })
-        console.log(this.state)
+        console.log(this.state.daftar)
         
     }
     render() {

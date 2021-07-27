@@ -12,19 +12,21 @@ export default function Daftar(props){
                     <option value="bogor">Bogor</option>
                 </Form.Select>
             </Form.Group>
-            <Form.Group name="gender" className="mb-3" controlId="formBasicPassword" onChange={handleChange}>
+            <Form.Group className="mb-3" controlId="formBasicPassword" onChange={handleChange}>
                 <Form.Label>Gender</Form.Label>
                 <Form.Check
                 type="radio"
                 label="Pria"
-                name="Pria"
+                name="gender"
                 id="Pria"
+                value="Pria"
                 />
                 <Form.Check
                 type="radio"
                 label="Wanita"
-                name="Wanita"
-                id="Wania"
+                name="gender"
+                id="Wanita"
+                value="Wanita"
                 />
             </Form.Group>
     </div>
